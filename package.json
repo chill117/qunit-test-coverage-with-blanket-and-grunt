@@ -1,0 +1,14 @@
+{
+  "name": "qunit-test-coverage-and-grunt",
+  "version": "1.0.0",
+  "description": "QUnit test coverage data with blanket and grunt",
+  "author": "Charles Hill <chill@degreesofzero.com>",
+  "license": "MIT",
+  "dependencies": {
+    "blanket": "1.2.3",
+    "grunt": "1.0.1",
+    "grunt-contrib-connect": "1.0.2",
+    "grunt-contrib-qunit": "2.0.0",
+    "qunitjs": "2.4.0"
+  }
+}

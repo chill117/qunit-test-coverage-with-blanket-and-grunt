@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QUnit Tests</title>
+	<link rel="stylesheet" href="/node_modules/qunitjs/qunit/qunit.css">
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+	<script src="/node_modules/qunitjs/qunit/qunit.js"></script>
+	<script src="/node_modules/blanket/dist/qunit/blanket.js"></script>
+
+	<!-- Application files: -->
+	<script data-cover src="/app/some-module.js"></script>
+	<script data-cover src="/app/another-module.js"></script>
+
+	<!-- Test files: -->
+	<script src="/test/app/some-module.js"></script>
+	<script src="/test/app/another-module.js"></script>
+
+	<script>
+		(function() {
+
+			var origin = location.protocol + '//' + location.host;
+			var buffer = {};
+			blanket.options('reporter', function(coverageData) {
+				var fileUrl, fileName, lineNumber, executionCount;
+				for (fileUrl in coverageData.files) {
+					fileName = fileUrl.substr(origin.length);
+					buffer[fileName] = {};
+					for (lineNumber = 0; lineNumber < coverageData.files[fileUrl].source.length; lineNumber++) {
+						if (typeof coverageData.files[fileUrl][lineNumber] !== 'undefined') {
+							executionCount = coverageData.files[fileUrl][lineNumber];
+							buffer[fileName][lineNumber] = executionCount;
+						}
+					}
+				}
+			});
+
+			QUnit.done(function() {
+				alert(JSON.stringify(['qunit.report', buffer]));
+			});
+		})();
+	</script>
+</body>
+</html>
